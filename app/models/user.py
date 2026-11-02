@@ -1,9 +1,16 @@
 from datetime import datetime
+from enum import Enum
 
-from sqlalchemy import Boolean, DateTime, String
+from sqlalchemy import Boolean, DateTime, Enum as SQLEnum, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database import Base
+
+
+class UserRole(str, Enum):
+    CUSTOMER = "CUSTOMER"
+    ADMIN = "ADMIN"
+    FRAUD_ANALYST = "FRAUD_ANALYST"
 
 
 class User(Base):
@@ -23,6 +30,12 @@ class User(Base):
 
     password_hash: Mapped[str] = mapped_column(
         String(255),
+        nullable=False,
+    )
+
+    role: Mapped[UserRole] = mapped_column(
+        SQLEnum(UserRole, name="user_role"),
+        default=UserRole.CUSTOMER,
         nullable=False,
     )
 

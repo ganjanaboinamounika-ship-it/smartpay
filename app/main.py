@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from app.api.v1.auth import router as auth_router
+from app.api.v1.rbac import router as rbac_router
 from app.core.config import settings
 
 
@@ -14,6 +16,21 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
+
+app.include_router(
+    auth_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    auth_router,
+    prefix="/api/v1",
+)
+
+app.include_router(
+    rbac_router,
+    prefix="/api/v1",
+)
 
 @app.get("/")
 def root():
