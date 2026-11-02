@@ -5,8 +5,13 @@ from sqlalchemy.orm import Session
 from app.api.dependencies import get_current_user
 from app.core.database import get_db
 from app.models import Payment, User
-from app.schemas.payment import PaymentCreate, PaymentResponse
+from app.schemas.payment import (
+    PaymentCreate,
+    PaymentResponse,
+    PaymentVerifyRequest,
+)
 from app.services.payment_service import create_payment
+from app.services.payment_verification_service import verify_payment
 
 
 router = APIRouter(
@@ -33,6 +38,35 @@ def create_payment_endpoint(
 
     return payment
 
+@router.post("/verify", response_model=PaymentResponse)
+def verify_payment_endpoint(
+    verify_data: PaymentVerifyRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    payment = db.scalar(
+        select(Payment).where(
+            Payment.id == verify_data.payment_id,
+            Payment.user_id == current_user.id,
+        )
+    )
+
+    if payment is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Payment not found",
+        )
+
+    if payment.status == "SUCCESS":
+        return payment
+
+    if payment.status == "FAILED":
+        return payment
+
+    return verify_payment(
+        db=db,
+        payment=payment,
+    )
 
 @router.get(
     "/{payment_id}",

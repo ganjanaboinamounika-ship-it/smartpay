@@ -26,6 +26,11 @@ class PaymentResponse(BaseModel):
     amount: Decimal
     currency: str
     payment_method: PaymentMethod
+    gateway_transaction_id: str | None
     status: PaymentStatus
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class PaymentVerifyRequest(BaseModel):
+    payment_id: int = Field(gt=0)

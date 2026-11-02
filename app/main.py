@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.api.v1.auth import router as auth_router
+from app.api.v1.mock_gateway import router as mock_gateway_router
 from app.api.v1.payments import router as payments_router
 from app.api.v1.rbac import router as rbac_router
 from app.core.config import settings
@@ -33,6 +34,9 @@ app.include_router(
     prefix="/api/v1",
 )
 
+app.include_router(
+    mock_gateway_router,
+)
 
 @app.get("/")
 def root():

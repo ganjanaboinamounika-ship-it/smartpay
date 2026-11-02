@@ -58,6 +58,12 @@ class Payment(Base):
         String(30),
         nullable=False,
     )
+    
+    gateway_transaction_id: Mapped[str | None] = mapped_column(
+    String(100),
+    unique=True,
+    nullable=True,
+)
 
     status: Mapped[PaymentStatus] = mapped_column(
         String(20),
