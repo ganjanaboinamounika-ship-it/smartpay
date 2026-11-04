@@ -5,6 +5,7 @@ from app.api.v1.mock_gateway import router as mock_gateway_router
 from app.api.v1.payments import router as payments_router
 from app.api.v1.rbac import router as rbac_router
 from app.core.config import settings
+from app.core.redis import check_redis_connection
 
 
 app = FastAPI(
@@ -53,4 +54,14 @@ def health_check():
     return {
         "success": True,
         "status": "healthy",
+    }
+
+@app.get("/health/redis")
+def redis_health_check():
+    is_connected = check_redis_connection()
+
+    return {
+        "success": is_connected,
+        "service": "redis",
+        "status": "connected" if is_connected else "disconnected",
     }
