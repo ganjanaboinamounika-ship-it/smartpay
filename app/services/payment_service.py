@@ -23,7 +23,10 @@ def create_payment(
     )
 
     db.add(payment)
-    db.commit()
-    db.refresh(payment)
+
+    # Send the INSERT to PostgreSQL without committing.
+    # This allows the idempotency record to be saved
+    # in the same transaction.
+    db.flush()
 
     return payment

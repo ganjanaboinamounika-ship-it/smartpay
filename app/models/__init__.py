@@ -1,5 +1,7 @@
 from app.models.payment import Payment, PaymentMethod, PaymentStatus
 from app.models.user import User, UserRole
+from app.models.idempotency import IdempotencyRecord
+
 
 __all__ = [
     "User",
@@ -7,4 +9,5 @@ __all__ = [
     "Payment",
     "PaymentMethod",
     "PaymentStatus",
+    "IdempotencyRecord",
 ]
