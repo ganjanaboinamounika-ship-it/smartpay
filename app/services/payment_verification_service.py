@@ -23,6 +23,10 @@ def verify_payment(
         is_unusual_location=False,
     )
 
+    # Save fraud detection results to the payment record.
+    payment.fraud_score = fraud_result.total_score
+    payment.risk_level = fraud_result.risk_level
+
     if fraud_result.risk_level == "HIGH":
         payment.status = PaymentStatus.FAILED.value
 

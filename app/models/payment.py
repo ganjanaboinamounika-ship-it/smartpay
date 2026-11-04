@@ -71,6 +71,16 @@ class Payment(Base):
         default=PaymentStatus.PENDING,
     )
 
+    fraud_score: Mapped[int] = mapped_column(
+        default=0,
+        nullable=False,
+    )
+
+    risk_level: Mapped[str] = mapped_column(
+        String(20),
+        default="LOW",
+        nullable=False,
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.utcnow,

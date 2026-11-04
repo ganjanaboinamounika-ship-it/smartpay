@@ -28,6 +28,8 @@ class PaymentResponse(BaseModel):
     payment_method: PaymentMethod
     gateway_transaction_id: str | None
     status: PaymentStatus
+    fraud_score: int
+    risk_level: str
 
     model_config = ConfigDict(from_attributes=True)
 
