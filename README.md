@@ -1,8 +1,8 @@
-\# SMARTPAY — Smart Payment \& Fraud Detection API
+\# SMARTPAY - Smart Payment \& Fraud Detection API
 
 
 
-A production-style educational payment processing and fraud detection backend.
+A production-style educational payment processing and fraud detection backend built using Python and FastAPI.
 
 
 
@@ -22,11 +22,9 @@ SMARTPAY simulates a digital payment platform with:
 
 \- Payment processing simulation
 
-\- Fraud detection
+\- Fraud detection and risk scoring
 
-\- Risk scoring
-
-\- Idempotency
+\- Idempotency protection
 
 \- Redis caching and rate limiting
 
@@ -54,65 +52,27 @@ SMARTPAY simulates a digital payment platform with:
 
 
 
-\### Backend
+| Component | Technology |
 
-\- Python
+|---|---|
 
-\- FastAPI
+| Backend | Python, FastAPI, Pydantic |
 
-\- Pydantic
+| Database | PostgreSQL, SQLAlchemy |
 
-\- SQLAlchemy
+| Migrations | Alembic |
 
-\- Alembic
+| Cache | Redis |
 
+| Message Queue | RabbitMQ |
 
+| Background Tasks | Celery |
 
-\### Database
+| Authentication | JWT, Argon2 |
 
-\- PostgreSQL
+| Testing | Pytest, HTTPX |
 
-
-
-\### Cache
-
-\- Redis
-
-
-
-\### Message Queue
-
-\- RabbitMQ
-
-
-
-\### Background Processing
-
-\- Celery
-
-
-
-\### Authentication
-
-\- JWT
-
-\- Argon2 password hashing
-
-
-
-\### Testing
-
-\- Pytest
-
-\- HTTPX
-
-
-
-\### Containerization
-
-\- Docker
-
-\- Docker Compose
+| Containerization | Docker, Docker Compose |
 
 
 
@@ -120,23 +80,41 @@ SMARTPAY simulates a digital payment platform with:
 
 
 
-Phase 1 — Project Initialization and Environment Setup
+\- Phases 1-10: Completed
+
+\- Phase 11: RabbitMQ and Celery integration - Completed
+
+\- Phase 12: Webhooks - Upcoming
 
 
 
-Status: In Progress
+\### Phase 11 Verification
 
 
 
-\## Important
+Successfully tested asynchronous task processing:
 
 
 
-This is an educational payment simulation.
+1\. Celery worker connected to RabbitMQ.
+
+2\. A test task was submitted.
+
+3\. The worker processed the task.
+
+4\. The result was retrieved from Redis.
 
 
 
-It does not process real money and must not store real card numbers,
+\## Running the Infrastructure
 
-CVV values, or sensitive payment credentials.
+
+
+Start PostgreSQL, Redis, and RabbitMQ:
+
+
+
+```powershell
+
+docker compose up -d
 
