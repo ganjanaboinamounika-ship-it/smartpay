@@ -34,3 +34,8 @@ Thumbs.db
 # Secrets
 *.pem
 *.key
+# Celery Beat temporary files
+celerybeat-schedule*
+
+# Local password reset utilities
+reset_user*_password.py

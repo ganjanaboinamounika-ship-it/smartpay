@@ -4,6 +4,7 @@ from app.api.v1.auth import router as auth_router
 from app.api.v1.mock_gateway import router as mock_gateway_router
 from app.api.v1.payments import router as payments_router
 from app.api.v1.rbac import router as rbac_router
+from app.api.v1.webhooks import router as webhooks_router
 from app.core.config import settings
 from app.core.redis import check_redis_connection
 
@@ -20,24 +21,16 @@ app = FastAPI(
 )
 
 
-app.include_router(
-    auth_router,
-    prefix="/api/v1",
-)
+app.include_router(auth_router, prefix="/api/v1")
+app.include_router(rbac_router, prefix="/api/v1")
+app.include_router(payments_router, prefix="/api/v1")
+app.include_router(webhooks_router, prefix="/api/v1")
 
-app.include_router(
-    rbac_router,
-    prefix="/api/v1",
-)
 
-app.include_router(
-    payments_router,
-    prefix="/api/v1",
-)
+# Mock gateway is available only in development and testing.
+if settings.ENVIRONMENT.strip().lower() in {"development", "testing"}:
+    app.include_router(mock_gateway_router)
 
-app.include_router(
-    mock_gateway_router,
-)
 
 @app.get("/")
 def root():
@@ -55,6 +48,7 @@ def health_check():
         "success": True,
         "status": "healthy",
     }
+
 
 @app.get("/health/redis")
 def redis_health_check():

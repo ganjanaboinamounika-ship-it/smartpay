@@ -5,10 +5,10 @@ from jose import JWTError, jwt
 from app.core.config import settings
 
 
-def create_access_token(
-    user_id: int,
-    role: str,
-) -> str:
+JWT_ALGORITHM = "HS256"
+
+
+def create_access_token(user_id: int, role: str) -> str:
     expire = datetime.now(timezone.utc) + timedelta(
         minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
     )
@@ -22,7 +22,7 @@ def create_access_token(
     return jwt.encode(
         payload,
         settings.JWT_SECRET,
-        algorithm=settings.JWT_ALGORITHM,
+        algorithm=JWT_ALGORITHM,
     )
 
 
@@ -31,9 +31,8 @@ def decode_access_token(token: str) -> dict:
         payload = jwt.decode(
             token,
             settings.JWT_SECRET,
-            algorithms=[settings.JWT_ALGORITHM],
+            algorithms=[JWT_ALGORITHM],
         )
-
         return payload
 
     except JWTError as exc:

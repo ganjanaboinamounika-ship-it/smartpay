@@ -36,3 +36,7 @@ class PaymentResponse(BaseModel):
 
 class PaymentVerifyRequest(BaseModel):
     payment_id: int = Field(gt=0)
+    gateway_status: str | None = Field(
+        default=None,
+        pattern="^(SUCCESS|FAILED|TIMEOUT)$",
+    )

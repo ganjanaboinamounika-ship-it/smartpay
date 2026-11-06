@@ -183,8 +183,9 @@ def verify_payment_endpoint(
         return payment
 
     return verify_payment(
-        db=db,
-        payment=payment,
+       db=db,
+       payment=payment,
+       forced_gateway_status=verify_data.gateway_status,
     )
 
 
