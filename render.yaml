@@ -1,0 +1,30 @@
+﻿services:
+  - type: web
+    name: smartpay-api
+    runtime: python
+    plan: free
+    branch: master
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: APP_NAME
+        value: SmartPay
+      - key: APP_VERSION
+        value: 1.0.0
+      - key: FRONTEND_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: RABBITMQ_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: WEBHOOK_SECRET
+        sync: false
+      - key: WEBHOOK_ENCRYPTION_KEY
+        sync: false

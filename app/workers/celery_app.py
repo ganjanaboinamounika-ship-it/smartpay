@@ -1,3 +1,6 @@
+
+import ssl
+
 from celery import Celery
 
 from app.core.config import settings
@@ -19,6 +22,11 @@ celery_app.conf.update(
     task_track_started=True,
     task_acks_late=True,
     worker_prefetch_multiplier=1,
+
+    # Enable verified TLS for the Upstash Redis result backend.
+    redis_backend_use_ssl={
+        "ssl_cert_reqs": ssl.CERT_REQUIRED,
+    },
 
     beat_schedule={
         "recover-pending-webhooks-every-minute": {

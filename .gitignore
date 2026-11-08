@@ -39,3 +39,10 @@ celerybeat-schedule*
 
 # Local password reset utilities
 reset_user*_password.py
+
+# Protect all environment-specific files
+.env.*
+!.env.example
+
+# Local Alembic migration backup
+/alembic/versions/f2b5c5a5f471_initial_schema.py.backup
